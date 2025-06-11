@@ -23,10 +23,10 @@ const cache = new Map();
 const CACHE_TTL = 30 * 24 * 60 * 60 * 1000; // Cache for 30 Days
 
 // Glitch CDNのベースURL
-const GLITCH_CDN_BASE_URL = 'https://cdn.glitch.global/';
+// const GLITCH_CDN_BASE_URL = 'https://cdn.glitch.global/';
 
 // Glitch CDNのパスに含まれる固定の識別子
-const CDN_PATH_IDENTIFIER = '36d6d21a-f25a-453f-bcd8-2ec0675f246a';
+// const CDN_PATH_IDENTIFIER = '36d6d21a-f25a-453f-bcd8-2ec0675f246a';
 
 
 /**
@@ -34,23 +34,23 @@ const CDN_PATH_IDENTIFIER = '36d6d21a-f25a-453f-bcd8-2ec0675f246a';
  * @param {string} filename - リダイレクトする画像ファイル名（例: 'full-main.png', '1.webp' など）
  * @returns {string} Glitch CDNの完全なURL
  */
-function buildGlitchCdnUrl(filename) {
-  return `${GLITCH_CDN_BASE_URL}${CDN_PATH_IDENTIFIER}/${filename}`;
-}
+//function buildGlitchCdnUrl(filename) {
+//  return `${GLITCH_CDN_BASE_URL}${CDN_PATH_IDENTIFIER}/${filename}`;
+//}
 
 
-app.get('/assets/media/:sub_dir/:filename', (req, res) => {
-  const subDir = req.params.sub_dir; // 例: 'background', 'favicon', 'icons'
-  const filename = req.params.filename; // 例: 'full-inverted.png', 'bim.ico', '1.webp'
+//app.get('/assets/media/:sub_dir/:filename', (req, res) => {
+//  const subDir = req.params.sub_dir; // 例: 'background', 'favicon', 'icons'
+//  const filename = req.params.filename; // 例: 'full-inverted.png', 'bim.ico', '1.webp'
   
   // ここで重要なのは、Glitch CDNのURLにはサブディレクトリの情報が不要な点です。
   // 必要になるのはファイル名だけなので、filename を使ってリダイレクトURLを構築します。
-  const redirectUrl = buildGlitchCdnUrl(filename);
+//  const redirectUrl = buildGlitchCdnUrl(filename);
 
-  console.log(`Request for /assets/media/${subDir}/${filename}`);
-  console.log(`Redirecting to: ${redirectUrl}`);
-  res.redirect(redirectUrl);
-});
+//  console.log(`Request for /assets/media/${subDir}/${filename}`);
+//  console.log(`Redirecting to: ${redirectUrl}`);
+//  res.redirect(redirectUrl);
+//});
 
 
 
@@ -75,11 +75,11 @@ if (config.challenge !== false) {
 // 重要なのは、routes.forEach で定義される一般的な /a ルートよりも「前」にくることです。)
 
 // --- 新しい /a/:xorEncodedUrl ルートを追加 ---
-app.get("/a/:xorEncodedUrl", (_req, res) => {
+//app.get("/a/:xorEncodedUrl", (_req, res) => {
     // /a/ の後にパスパラメータが付いている場合でも games.html を返します。
     // i.js がこのパスパラメータを読み取って処理します
-  res.sendFile(path.join(__dirname, "static", "xor-loader.html"));
-});
+ // res.sendFile(path.join(__dirname, "static", "xor-loader.html"));
+//});
 
 
 app.get("/e/*", async (req, res, next) => {
