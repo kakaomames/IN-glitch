@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
+  <title id="t">Home</title>
+  <link rel="stylesheet" id="global" href="/assets/css/global.css?v=6" />
+  <link rel="stylesheet" href="/assets/css/container.css?v=2" />
+  <link rel="stylesheet" href="/assets/css/nav.css?v=01" />
+  <link rel="stylesheet" href="/assets/css/settings.css?v=06" />
+  <script src="assets/js/003.js?v=000"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <div class="f-nav"></div>
+  <div class="main">
+    <div class="settings-container">
+      <div class="settings-card">
+        <h3>About:Blank</h3>
+        <p>
+          サイトをabout:blankページに表示し、about:blankをオンに切り替えます。
+起動（デフォルトで有効）
+        </p>
+        <div id="ab-settings">
+          <div id="ab-settings-container">
+            <label class="switch">
+              <input type="checkbox" id="ab-settings-switch" class="slider-checkbox" onchange="toggleAB()" />
+              <span class="slider-round"></span>
+            </label>
+          </div>
+          <button onclick="AB()" class="key-button">起動（デフォルトで有効）</button>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h3>パニックキーを設定</h3>
+        <p>
+          ワンプレスで別のサイトをすばやく開く。<br>About:blankが開いたときのリダイレクトに使用されます。複数のキーストロークの場合は、カンマで区切ってください。<br>例：「A、B、C」
+        </p>
+        <input type="text" id="eventKeyInput" placeholder="Panic Keys (comma separated)" class="key-form" />
+        <input class="key-form" placeholder="Panic Link" type="text" id="linkInput" value />
+        <button class="key-button" value="Save" onclick="saveEventKey()">
+          保存する
+        </button>
+      </div>
+      <div class="settings-card">
+        <h3>タブクローカー</h3>
+        <p>ページのタイトルとアイコンを変更します。</p>
+        <select id="dropdown" onchange="handleDropdownChange(this)">
+          <option value="Classroom">デフォルト</option>
+          <option value="Clever">Clever</option>
+          <option value="Canvas">Canvas</option>
+          <option value="Edpuzzle">Edpuzzle</option>
+          <option value="Google">Google</option>
+          <option value="Google Meet">グーグルミート</option>
+          <option value="Classroom">グーグルクラスルーム(デフォルト)</option>
+          <option value="Drive">グーグルドライブ</option>
+          <option value="Google Docs">グーグルドキュメント</option>
+          <option value="Google Slides">グーグルスライド</option>
+          <option value="Gmail">Gmail</option>
+          <option value="Khan">カーンアカデミー</option>
+          <option value="Campus">無限のキャンパス</option>
+          <option value="IXL">IXL</option>
+          <option value="LinkIt">LinkIt!</option>
+          <option value="Schoology">スクール</option>
+          <option value="i-Ready Math">i-Ready 数学</option>
+          <option value="i-Ready Reading">i-Ready 読書</option>
+          <option value="ClassLink Login">クラスリンクログイン</option>
+          <option value="Wikipedia">ウィキペディア</option>
+          <option value="Britannica">ブリタニカ</option>
+          <option value="Ducksters">ダックスター</option>
+          <option value="Minga">ミンガ</option>
+          <option value="i-Ready Learning Games">
+            i-Ready学習ゲーム
+          </option>
+          <option value="NoRedInk Home">ノーレッドインクホーム</option>
+          <option value="Newsela Binder">ニュースラ・バインダー</option>
+          <option value="Newsela Assignments">ニューセラの割り当て</option>
+          <option value="Newsela Home">ニューセラホーム</option>
+          <option value="PowerSchool Sign In">パワースクールのサインイン</option>
+          <option value="PowerSchool Grades and Attendance">
+            パワースクールの成績と出席
+          </option>
+          <option value="PowerSchool Teacher Comments">
+            パワースクールの先生のコメント
+          </option>
+          <option value="PowerSchool Standards Grades">
+            パワースクール標準グレード
+          </option>
+          <option value="PowerSchool Attendance">
+            パワースクールの出席
+          </option>
+          <option value="Nearpod">ニアポッド</option>
+          <option value="StudentVUE">学生VUE</option>
+          <option value="Quizlet Home">クイズレットホーム</option>
+          <option value="Google Forms Locked Mode">
+            Google フォーム - ロックモード
+          </option>
+          <option value="DeltaMath">デルタ数学</option>
+          <option value="Kami">Kami</option>
+          <option value="GoGuardian Admin Restricted">
+            GoGuardian管理ブロック
+          </option>
+          <option value="GoGuardian Teacher Block">
+            ゴーガーディアン教師ブロック
+          </option>
+          <option value="World History Encyclopedia">
+            世界史百科事典
+          </option>
+          <option value="Big Ideas Math">ビッグアイデア数学</option>
+          <option value="Big Ideas Math Assignment Player">
+            ビッグアイデア数学課題プレーヤー
+          </option>
+          <option value="Savvas Realize">サヴァス・リアライズ</option>
+          <option value="SmartPass">スマートパス</option>
+          <option value="World Book Online - Super Home">
+            ワールドブックオンライン（スーパーホーム）
+          </option>
+          <option value="World Book Online - Student">
+            ワールドブックオンライン（学生）
+          </option>
+          <option value="World Book Online - Timelines">
+            ワールドブックオンライン（タイムライン）
+          </option>
+          <option value="Naviance">航海学生</option>
+          <option value="PBS Learning Media">PBSラーニングメディア</option>
+          <option value="PBS Learning Media Student Home">
+            PBSラーニングメディア学生ホーム
+          </option>
+          <option value="Dictionary">Dictionary.com</option>
+          <option value="Thesaurus">Thesaurus.com</option>
+        </select>
+        <div id="buttonLayer">
+          <button class="key-button" value="Save" onclick="CustomIcon(); CustomName(); redirectToMainDomain();">
+            保存する
+          </button>
+          <button class="key-button" value="Reset" onclick="ResetCustomCloak(); redirectToMainDomain();">
+            マントをリセットする
+          </button>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h3>背景画像を設定</h3>
+        <p>サイトの背景画像を変更します。</p>
+        <input class="key-form" type="text" id="background-input" placeholder="Enter image URL" />
+        <button class="key-button" id="save-button">保存する</button>
+        <button class="key-button" id="reset-button">リセット</button>
+      </div>
+      <div class="settings-card">
+        <h3>サーチエンジン</h3>
+        <p>検索時に検索エンジンを変更します。</p>
+        <select title="engine" id="engine" onchange="EngineChange(this)">
+          <option value="Google">Google (デフォルト)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Google（グーグル）とは、1998年に設立されたアメリカの多国籍企業です。世界最大の検索エンジンや、オンライン広告、クラウドコンピューティング、ソフトウェア、ハードウェア関連の事業などを展開しています. Google LLC は Alphabet社の子会社である.
+</option>
+          <option value="Bing">Bing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bingとは、Microsoft社が提供しているインターネット検索エンジンです。2009年にリリースされ、日本でも2010年から提供されています。Googleに次ぐ世界第2位のシェアを誇り、Microsoft Edgeではデフォルトの検索エンジンとなっています。</option>
+          <option value="DuckDuckGo">DuckDuckGo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DuckDuckGo（ダックダックゴー）は、ユーザーのプライバシーを保護することを目的としたインターネット検索エンジンです。Googleなどの他の検索エンジンとは異なり、ユーザーの検索履歴や個人情報を記録しません。このため、プライバシーを重視するユーザーに人気があります。﻿</option>
+          <option value="Qwant">Qwant&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Qwant（クワント）とは、フランスで開発されたプライバシー重視の検索エンジンです。ユーザーのプライバシーを守るため、検索履歴や個人情報の追跡、プロファイル作成を行わないように設計されています。また、中立的な検索結果を提供することを目的としています.</option>
+          <option value="Startpage">Startpage&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Startpageとは、プライバシーを重視した検索エンジンです。Googleの検索結果をそのまま表示しながら、Googleがユーザーを追跡することを防ぎ、個人情報を保護します。</option>
+          <option value="SearchEncrypt">SearchEncrypt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>SearchEncryptとは、検索結果の検索語句が閲覧後に削除されるプライバシー重視の検索エンジンです。</option>
+          <option value="Ecosia">Ecosia&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>Ecosia（エコジア）は、ドイツのベルリンの企業が開発した環境配慮型検索エンジンです。ユーザーが検索すると、その広告収入の一部が植林活動を行う非営利団体に寄付され、植樹に繋がります</option>
+        </select>
+        <input class="key-form" type="text" id="engine-form" placeholder="Change Search Engine" name="engine" />
+        <button class="key-button" value="Save" onclick="SaveEngine();">
+          Save
+        </button>
+      </div>
+      <div class="settings-card">
+        <h3><an>Pro</an>xyを選んでください</h3>
+        <p>
+          紫<an>外</an>線 はメインの <an>pro</an>xyです、しかし、ダイナミックはより速く、より多くのサイトをサポートしています。(ダイナミックはまだベータ版なので、いくつかのバグが予想されます。)
+        </p>
+        <select id="pChange">
+          <option value="uv">紫<an>外</an>線（デフォルト）</option>
+          <option value="dy">ダイナミック（about:blankでは動作しません）</option>
+        </select>
+      </div>
+      <div class="settings-card">
+        <h3>粒子</h3>
+        <p>
+          以前のバージョンのパーティクルを新しいサイトに追加します。
+        </p>
+        <label class="switch">
+          <input type="checkbox" class="slider-checkbox" id="2" />
+          <span class="slider-round"></span>
+        </label>
+      </div>
+      <div class="settings-card">
+        <h3>テーマ！</h3>
+        <p>さまざまなテーマから選択して、エクスペリエンスをカスタマイズします。</p>
+<select placeholder="Solid Color Themes" id="dropdown" class="td" onchange="themeChange(this)">
+          <option disabled selected>単色テーマ</option>
+          <option value="d">デフォルト</option>
+          <option value="Inverted">反転した</option>
+          <option value="sky">空</option>
+          <option disabled selected>カットプッチンのテーマ</option>
+          <option value="catppuccinMocha">モカ</option>
+          <option value="catppuccinMacchiato">マキアート</option>
+          <option value="catppuccinFrappe">顕著な</option>
+          <option value="catppuccinLatte">ラテ</option>
+          <option disabled selected>カスタムテーマ</option>
+        </select>
+      </div>
+      <div class="settings-card">
+        <h3>データ管理の保存</h3>
+        <p>このサイトでインターステラーデータをエクスポートし、別のサイトでインポートします。<br>このサイトは将来ブロックされるかもしれませんが、保存したデータを失いたくないので、これは便利です。
+        </p>
+        <p id="warning">セーブファイルをインポートすると、現在のセーブが上書きされます！</p>
+        <button class="key-button" value="Export" onclick="exportSaveData();">エクスポート保存</button>
+        <button class="key-button" value="Import" onclick="importSaveData();">インポート保存</button>
+      </div>
+      <div class="settings-card">
+        <h3>情報</h3>
+        <p>バージョン: v5.2.6</p>
+        <p id="last-updated">最終更新日: 2024年　10月 2日, </p>
+        <p>
+          質問？私たちに参加するなら
+          <a href="https://discord.gg/interstellar">ディスコードコミュニティ</a>か、
+          <a href="mailto:hello@gointerstellar.app">hello@gointerstellar.app</a>にメールするか、
+          <a href="https://docs.gointerstellar.app/faq">よくある質問をご覧ください</a>!
+        </p>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/js/001.js?v=001"></script>
+  <script src="/assets/js/006.js?v=000"></script>
+  <!-- DO NOT REMOVE-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-WKJQ5QHQTJ");
+  </script>
+  <!-- DO NOT REMOVE-->
+</body>
+
+</html>

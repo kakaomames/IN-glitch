@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リンクを読み込み中...</title>
+    <!-- Tailwind CSS CDNを読み込み -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Interフォントを適用 */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            overflow: hidden; /* スクロールバーを非表示 */
+        }
+        .loader {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .message {
+            margin-top: 20px;
+            color: #555;
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 80%;
+        }
+        .error-message {
+            color: #dc2626; /* red-600 */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex flex-col items-center">
+        <div class="loader"></div>
+        <p class="message">リンクを読み込み中、しばらくお待ちください...</p>
+    </div>
+
+    <!-- 005.js を読み込みます -->
+    <!-- !!! ここをあなたの実際のファイルパスに合わせて修正してください !!! -->
+    <!-- 例: static/assets/scripts/005.js ならば src="/assets/scripts/005.js" -->
+    <!-- 例: static/js/005.js ならば src="/js/005.js" -->
+  <script src="/assets/js/005.js?v=000"></script>
+  <script src="/assets/mathematics/bundle.js?v=2025-04-15"></script>
+  <script src="/assets/mathematics/config.js?v=2025-04-15"></script>
+
+    <script>
+        // XORデコードのためのキー (XOR.html と同じキー)
+        const xorKey = [
+            0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02,
+            0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02, 0x00, 0x02
+        ];
+
+        /**
+         * XORデコードを行う関数。
+         * @param {string} input - デコードするエンコードされた文字列。
+         * @returns {string} デコードされた文字列。
+         */
+        function xorDecode(input) {
+            let output = '';
+            for (let i = 0; i < input.length; i++) {
+                output += String.fromCharCode(input.charCodeAt(i) ^ xorKey[i % xorKey.length]);
+            }
+            return output;
+        }
+
+        /**
+         * 文字列が有効なHTTP/HTTPS URLであるかをチェックするヘルパー関数。
+         * @param {string} string - チェックする文字列。
+         * @returns {boolean} 有効なURLであればtrue、そうでなければfalse。
+         */
+        function isValidHttpUrl(string) {
+            let url;
+            try {
+                url = new URL(string);
+            } catch (_) {
+                return false;
+            }
+            return url.protocol === "http:" || url.protocol === "https:";
+        }
+
+        // DOMContentLoaded イベントで処理を開始
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname;
+            const messageElement = document.querySelector('.message');
+
+            // `/a/` で始まり、その後にエンコードされたURLが続くパターンをチェック
+            const match = currentPath.match(/^\/a\/(.+)$/);
+
+            if (match && match[1]) {
+                const xorEncodedUrlPart = match[1];
+                console.log(`[xor-loader.html] Raw XOR encoded part from URL: "${xorEncodedUrlPart}"`);
+
+                try {
+                    // まずURLエンコードを解除する
+                    const urlDecodedXorPart = decodeURIComponent(xorEncodedUrlPart);
+                    console.log(`[xor-loader.html] URL-decoded part before XOR decode: "${urlDecodedXorPart}"`);
+
+                    // 次にXORデコードを実行
+                    const decodedOriginalUrl = xorDecode(urlDecodedXorPart);
+                    console.log(`[xor-loader.html] Decoded original URL (raw): "${decodedOriginalUrl}"`);
+
+                    // デコードされたURLを正規化（前後の空白除去、スキームの付与など）
+                    let finalUrl = decodedOriginalUrl.trim();
+                    if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+                        // ドメインのように見える（.が含まれる）がスキームがない場合、https://を付与
+                        if (finalUrl.includes('.') && !finalUrl.includes(' ')) {
+                            finalUrl = `https://${finalUrl}`;
+                            console.log(`[xor-loader.html] Added https:// prefix: "${finalUrl}"`);
+                        }
+                    }
+                    
+                    // processUrl に渡す前の最終的なURLの有効性チェック
+                    if (!isValidHttpUrl(finalUrl)) {
+                        console.error(`[xor-loader.html] Decoded URL is not a valid HTTP/HTTPS URL: "${finalUrl}"`);
+                        messageElement.textContent = "エラー: デコードされたリンクが無効なURL形式です。";
+                        messageElement.classList.add('error-message');
+                        return; // 処理を停止
+                    }
+
+                    console.log(`[xor-loader.html] Final URL to process: "${finalUrl}"`);
+
+                    // 005.js の processUrl 関数がグローバルスコープで利用可能であることを前提とする
+                    // タイプチェックを追加して、関数が存在しない場合のエラーをキャッチ
+                    if (typeof processUrl === 'function') {
+                        // processUrl を呼び出して、Ultravioletプロキシ経由でのリダイレクトを開始
+                        processUrl(finalUrl, ""); 
+                    } else {
+                        console.error("[xor-loader.html] Error: processUrl function not found. Please check script path and global scope.");
+                        messageElement.textContent = "エラー: 読み込み関数が見つかりません。スクリプトパスとグローバルスコープを確認してください。";
+                        messageElement.classList.add('error-message');
+                    }
+                } catch (error) {
+                    console.error("[xor-loader.html] Error during XOR decoding or URL processing:", error);
+                    messageElement.textContent = `エラー: リンクのデコードまたは処理に失敗しました。詳細: ${error.message}`;
+                    messageElement.classList.add('error-message');
+                }
+            } else {
+                console.warn("[xor-loader.html] No XOR encoded URL found in path. Redirecting to games page.");
+                // エンコードされたURLがない場合は、通常のgamesページにリダイレクト
+                window.location.href = '/a'; 
+            }
+        });
+    </script>
+</body>
+</html>
