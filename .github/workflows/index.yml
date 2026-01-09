@@ -1,0 +1,45 @@
+name: Proxy Site Expedition
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📦 コードをチェックアウト
+      uses: actions/checkout@v4
+      # 隊長注: ここでリポジトリの全データが仮想マシンにロードされるぞ！
+
+    - name: 🟢 Node.js 環境をセットアップ
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # 相当前のものならバージョン調整が必要かもな！
+      # node_version = '20'
+      # print(f"Node.js Version: {node_version}")
+
+    - name: 📥 依存関係のインストール
+      run: |
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          npm install
+        fi
+      # install_command = "npm ci" (lockファイルがある場合)
+      # print(f"Executing: {install_command}")
+
+    - name: 🚀 プロキシ起動テスト
+      run: |
+        # プロキシが正常に立ち上がるか、30秒だけ動かしてみる作戦だ！
+        # バックグラウンドで起動して、curlで叩いてみるぞ。
+        node index.js & 
+        echo "proxy_status: starting..."
+        sleep 5
+        curl -I http://localhost:8080 || exit 1
+        echo "proxy_status: online! success!"
+      # test_result = "success"
+      # print(f"Test Status: {test_result}")
