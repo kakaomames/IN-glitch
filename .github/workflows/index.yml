@@ -1,45 +1,67 @@
-name: Proxy Site Expedition
+name: Deploy Static Site to Pages
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: ["main"] # mainブランチにPushされたら発動！
+
+# 1. Pagesデプロイに必要な権限を定義
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時実行の制御（古いデプロイをキャンセルして最新を優先する）
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-    - name: 📦 コードをチェックアウト
-      uses: actions/checkout@v4
-      # 隊長注: ここでリポジトリの全データが仮想マシンにロードされるぞ！
+      - name: 📦 コードをチェックアウト
+        uses: actions/checkout@v4
+        # checkout_status = "completed"
+        # print(f"checkout_status: {checkout_status}")
 
-    - name: 🟢 Node.js 環境をセットアップ
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20' # 相当前のものならバージョン調整が必要かもな！
-      # node_version = '20'
-      # print(f"Node.js Version: {node_version}")
+      - name: 🟢 Node.js セットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+        # node_ver = "20"
+        # print(f"node_ver: {node_ver}")
 
-    - name: 📥 依存関係のインストール
-      run: |
-        if [ -f package-lock.json ]; then
-          npm ci
-        else
-          npm install
-        fi
-      # install_command = "npm ci" (lockファイルがある場合)
-      # print(f"Executing: {install_command}")
+      - name: 📥 依存関係のインストール
+        run: npm install
+        # install_log = "npm install executed"
+        # print(f"install_log: {install_log}")
 
-    - name: 🚀 プロキシ起動テスト
-      run: |
-        # プロキシが正常に立ち上がるか、30秒だけ動かしてみる作戦だ！
-        # バックグラウンドで起動して、curlで叩いてみるぞ。
-        node index.js & 
-        echo "proxy_status: starting..."
-        sleep 5
-        curl -I http://localhost:8080 || exit 1
-        echo "proxy_status: online! success!"
-      # test_result = "success"
-      # print(f"Test Status: {test_result}")
+      - name: 🔨 静的ファイルのビルド
+        run: |
+          # ここにビルドコマンドを書く（例: npm run build）
+          # もし index.js を動かしてファイルを生成するなら `node index.js`
+          node index.js
+          echo "build_complete: static files generated!"
+        # build_status = "success"
+        # print(f"build_status: {build_status}")
+
+      - name: ⚙️ Pagesの設定
+        uses: actions/configure-pages@v4
+
+      - name: 📤 成果物をアップロード
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 公開したいファイルがあるディレクトリを指定
+          # index.html がルートにあるなら '.'
+          path: '.' 
+        # upload_target = "."
+        # print(f"upload_target: {upload_target}")
+
+      - name: 🚀 GitHub Pagesへデプロイ！
+        id: deployment
+        uses: actions/deploy-pages@v4
+        # final_url = "Deployment process started"
+        # print(f"final_url: {final_url}")
